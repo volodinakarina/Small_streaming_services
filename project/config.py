@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 class BaseConfig:
     SECRET_KEY = os.getenv('SECRET_KEY', 'you-will-never-guess')
-    JSON_AS_ASCII = False
+    # JSON_AS_ASCII = False
 
     ITEMS_PER_PAGE = 12
 

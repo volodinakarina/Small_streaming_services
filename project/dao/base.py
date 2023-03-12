@@ -1,7 +1,7 @@
-from typing import Generic, List, Optional, TypeVar
+from typing import Generic, TypeVar, Type, Any
 
 from flask import current_app
-from flask_sqlalchemy import BaseQuery
+from sqlalchemy import desc
 from sqlalchemy.orm import scoped_session
 from werkzeug.exceptions import NotFound
 from project.setup.db.models import Base
@@ -19,14 +19,22 @@ class BaseDAO(Generic[T]):
     def _items_per_page(self) -> int:
         return current_app.config['ITEMS_PER_PAGE']
 
-    def get_by_id(self, pk: int) -> Optional[T]:
+    def get_by_id(self, pk: int) -> T | None:
         return self._db_session.query(self.__model__).get(pk)
 
-    def get_all(self, page: Optional[int] = None) -> List[T]:
-        stmt: BaseQuery = self._db_session.query(self.__model__)
+    def get_all(self, page: int | None, status: str | None) -> list[Any] | list[Type[Base]] | Any:
+        stmt = self._db_session.query(self.__model__)
+        if status == 'new':
+            if page:
+                try:
+                    return stmt.order_by(desc(self.__model__.year)).paginate(page=page,
+                                                                             per_page=self._items_per_page).items
+                except NotFound:
+                    return []
+            return stmt.order_by(desc(self.__model__.year)).all()
         if page:
             try:
-                return stmt.paginate(page, self._items_per_page).items
+                return stmt.paginate(page=page, per_page=self._items_per_page).items
             except NotFound:
                 return []
         return stmt.all()

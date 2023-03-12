@@ -14,7 +14,6 @@ def app():
 
 @pytest.fixture
 def db(app):
-    database.init_app(app)
     database.drop_all()
     database.create_all()
     database.session.commit()
