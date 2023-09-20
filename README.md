@@ -1,49 +1,36 @@
-# Исходный код для курсовой работы №3
+# Small streaming services
 
-## Описание проекта
-- Установка зависимостей
-```shell
-pip install -r requirements.txt
+## Описание:
+В данном проекте реализован backend к стриминговому сервису, который отображает список фильмов, жанров и актеров.
+Позволяет пользователю авторизоваться и добавлять фильмы в избранное. 
 
-pip install -r requirements.dev.txt
-```
+## Используемые технологии:
+* Python
+* Flask
+* SQLite
+* SQLAlchemy
+* Pytest
 
-- Создание моделей (очистит БД и создаст все модели, указанные в импорте)
-```shell
-python create_tables.py
-```
+## Возможности:
+* Просмотр информации о всех фильмов
+* Просмотр информации об одном фильме
+* Просмотр информации о жанрах и актерах
+* Авторизация и регистрация пользователя
+* Добавление фильмов в избранное
 
-- Загрузка данных в базу
-```shell
-python load_fixture.py
-```
-Скрпит читает файл fixtures.json и загружает данные в базу. Если данные уже загружены - выводит соответсвующее сообщение. 
+## Как воспользоваться:
 
-## Запуск проекта
+1) Сделать копию данного репозитория:  
+`git clone ...`
 
-### Bash (Linux/MACOS)
-```shell
-export FLASK_APP=run.py
-export FLASK_ENV='development'
-flask run
-```
+2) Для того, чтобы запустить сервер, необходимо создать виртуально окружение на локальной машине:  
+`python -m venv venv`
 
-### CMD (Windows)
-```shell
-set FLASK_APP=run.py
-set FLASK_ENV=development
-flask run
-```
+3) После этого активировать виртуальное окружение:  
+`. venv\Scripts\activate.bat`
 
-### PowerShell (Windows)
-```shell
-$env:FLASK_APP = "run"
-$env:FLASK_ENV = "development"
-flask run
-```
+4) Настроить переменную окружения в файле .env:  
+`FLASK_ENV='production'`
 
-## Запуск тестов
-```shell
-pytest .
-```
-
+5) Запустить файл app.py:  
+`flask run -h 0.0.0.0 -p 80`
